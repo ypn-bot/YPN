@@ -1,0 +1,32 @@
+{
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"all": true,
+			"style": {
+				"useBlockStatements": "off",
+				"noNonNullAssertion": "off"
+			},
+			"suspicious": {
+				"noExplicitAny": "off"
+			},
+			"nursery": {
+				"noParameterAssign": "off"
+			}
+		}
+	},
+	"formatter": {
+		"enabled": true,
+		"indentSize": 2,
+		"indentStyle": "tab",
+		"lineWidth": 120,
+		"formatWithErrors": true
+	},
+	"files": {
+		"ignore": [
+			"node_modules/",
+			"dist",
+			"__test__"
+		]
+	}
+}
