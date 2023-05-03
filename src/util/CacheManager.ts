@@ -2,7 +2,6 @@ import IOredis from "ioredis";
 import type { APIEmoji } from "@discordjs/core";
 import { formatEmoji } from "./util";
 import type { YPNClient } from "../YPNClient";
-import { Identify } from "../types";
 
 const redisOptions = {
 	port: Number(process.env.REDIS_PORT) || 6379,
@@ -70,8 +69,8 @@ export class CacheManger extends IOredis {
 		return Promise.all(matchs.map((x) => this.get(x)));
 	}
 
-	async setEmoji(guildId: string, emojiId: string, data: Identify<APIEmoji & { guild_id: string }>) {
-		await this.set(`emoji:${guildId}:${emojiId}:${data.name}`, JSON.stringify(data));
+	async setEmoji(guildId: string, emojiId: string, data: APIEmoji) {
+		await this.set(`emoji:${guildId}:${emojiId}:${data.name}`, JSON.stringify({ ...data, guild_id: guildId }));
 		return data;
 	}
 
@@ -94,7 +93,7 @@ export class CacheManger extends IOredis {
 
 		if (Array.isArray(usedName)) {
 			cache = await Promise.all(usedName.map((x) => this.scanMatch(`emoji:${guildId}:${emojiId}:${x}`)));
-			return ([] as string[]).concat(...cache);
+			return [...cache.flat(1)];
 		}
 		cache = await this.scanMatch(`emoji:${guildId}:${emojiId}:${usedName}`);
 		return cache;

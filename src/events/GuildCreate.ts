@@ -21,11 +21,9 @@ export default {
 		}
 
 		for (const i of data.emojis ?? []) {
-			promises.push(
-				client.cache.set(`emoji:${data.id}:${i.id}:${i.name}`, JSON.stringify({ ...i, guild_id: data.id })),
-			);
+			promises.push(client.cache.setEmoji(data.id, i.id!, i));
 		}
-		
+
 		for (const i of data.members ?? []) {
 			promises.push(
 				client.cache.set(
