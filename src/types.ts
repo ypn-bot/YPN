@@ -1,6 +1,5 @@
 import {
 	APIApplicationCommandInteraction,
-	APIChatInputApplicationCommandInteraction,
 	APIApplicationCommand,
 	Permissions,
 	MappedEvents,
@@ -14,7 +13,7 @@ export type APICommand = Omit<
 	"id" | "guild_id" | "application_id" | "version" | "default_member_permissions"
 > & { default_member_permissions?: Permissions };
 
-export interface Command<T extends APIApplicationCommandInteraction = APIChatInputApplicationCommandInteraction> {
+export interface Command<T extends APIApplicationCommandInteraction = APIApplicationCommandInteraction> {
 	data: APICommand;
 
 	execute: (client: YPNClient, interaction: T, ...args: unknown[]) => Promise<void>;
